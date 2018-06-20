@@ -1,5 +1,5 @@
 // run: node sample-data/generator.js
-const insertHelpers = require('./insert-helpers');
+const insertHelpers = require('./pg_insert_helper');
 
 // helpers
 const getRandomInt = function getRandomIntegerBetweenValues(min, max) {
