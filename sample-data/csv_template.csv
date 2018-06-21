@@ -1,0 +1,8 @@
+listing_daily_prices:
+id, listing_id, cost_per_night, start_date
+
+listings:
+id, avg_rating, review_count, max_adults, max_children, max_infants, cleaning_fee, service_fee_perc, occ_tax_rate_perc, additional_guest_fee
+
+reservations:
+id, listing_id, start_date, end_date
