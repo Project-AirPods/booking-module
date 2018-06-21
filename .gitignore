@@ -24,3 +24,7 @@ coverage
 build/
 dist/
 public/bundle-booking.js
+
+sample-data/reservations.csv
+sample-data/listings.csv
+sample-data/listing_daily_prices.csv
