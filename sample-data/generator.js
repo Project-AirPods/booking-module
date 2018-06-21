@@ -102,7 +102,7 @@ const reservationsToCSV = function (n = 100) {
       nextReservation.setDate(endOfReservation.getDate() + getRandomInt(0, 10));
     }
 
-    if (i % 100000 === 0) {
+    if (i % 500000 === 0) {
       var section = reservations.join('\n') + '\n';
       fs.appendFileSync('./reservations.csv', section, 'utf8');
       reservations = [];
@@ -177,9 +177,6 @@ if (dailyPricesToCSV(10000001)) { // generate 10,000,000 prices
   console.timeEnd('... time elapsed');
   console.log('... FAILURE!');
 }
-
-
-
 
 // insert into database
 // listings.forEach(listing => insertHelpers.insertListing(listing));
