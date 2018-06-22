@@ -8,7 +8,9 @@
 //};
 
 module.exports = {
-  user: 'root',
+  user: 'jchan',
+  host: 'localhost',
   database: 'project_nomad_booking',
-  timeout: 60000,
+  password: '',
+  port: 5432,
 };
