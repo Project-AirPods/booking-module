@@ -3,8 +3,6 @@
 const fs = require('fs');
 var execSync = require('child_process').execSync;
 
-// const insertHelpers = require('./pg_insert_helper');
-
 // helpers
 const getRandomInt = function getRandomIntegerBetweenValues(min, max) {
   return Math.floor(Math.random() * ((max - min) + 1)) + min;
@@ -87,7 +85,8 @@ const reservationsToCSV = function (n = 100) {
   let rowNum = 1;
 
   for (let i = 0; i < n; i += 1) {
-    const reservationsForListing = getRandomInt(10, 50);
+    // const reservationsForListing = getRandomInt(10, 50);
+    const reservationsForListing = getRandomInt(3, 5);
     const nextReservation = new Date(startDate);
     nextReservation.setDate(startDate.getDate() + getRandomInt(0, 10));
 
@@ -102,7 +101,7 @@ const reservationsToCSV = function (n = 100) {
       nextReservation.setDate(endOfReservation.getDate() + getRandomInt(0, 10));
     }
 
-    if (i % 500000 === 0) {
+    if (i % 100000 === 0) {
       var section = reservations.join('\n') + '\n';
       fs.appendFileSync('./reservations.csv', section, 'utf8');
       reservations = [];
@@ -137,7 +136,8 @@ const dailyPricesToCSV = function (n = 100) {
   rowNum = 1;
   
   for (let i = 0; i < n; i += 1) {
-    const priceChangesForListing = getRandomInt(5, 10);
+    // const priceChangesForListing = getRandomInt(5, 10);
+    const priceChangesForListing = getRandomInt(3, 5);
     const nextDate = new Date(priceStartDate);
     let nextPrice = getRandomInt(45, 500);
   
@@ -157,7 +157,7 @@ const dailyPricesToCSV = function (n = 100) {
       nextDate.setDate(nextDate.getDate() + getRandomInt(10, 50));
     }
 
-    if (i % 100000 === 0) {
+    if (i % 500000 === 0) {
       var section = dailyPrices.join('\n') + '\n';
       fs.appendFileSync('./listing_daily_prices.csv', section, 'utf8');
       dailyPrices = [];
@@ -177,17 +177,3 @@ if (dailyPricesToCSV(10000001)) { // generate 10,000,000 prices
   console.timeEnd('... time elapsed');
   console.log('... FAILURE!');
 }
-
-// insert into database
-// listings.forEach(listing => insertHelpers.insertListing(listing));
-// console.log(`${listings.length} listings loaded!`);
-
-// reservations.forEach(reservation => insertHelpers.insertReservation(reservation));
-// console.log(`${reservations.length} reservations loaded!`);
-
-// dailyPrices.forEach(price => insertHelpers.insertPrice(price));
-// console.log(`${dailyPrices.length} daily prices loaded!`);
-
-// console.log('all sample data generated');
-
-// setTimeout(insertHelpers.closeConnection, 3000);

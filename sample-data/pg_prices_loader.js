@@ -1,12 +1,6 @@
+const config = require('../database/config.js');
 const { Pool, Client } = require('pg');
-
-const client = new Client({
-  user: 'jchan',
-  host: 'localhost',
-  database: 'project_nomad_booking',
-  password: '',
-  port: 5432,
-});
+const client = new Client(config);
 
 client.connect();
 
