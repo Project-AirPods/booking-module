@@ -30,3 +30,7 @@ CREATE TABLE listing_daily_prices (
   cost_per_night decimal(10, 2) NOT NULL,
   start_date date NOT NULL
 );
+
+CREATE INDEX listingsid ON listings (id);
+CREATE INDEX reservationsid ON reservations (listing_id);
+CREATE INDEX listingdailypricesid ON listing_daily_prices (listing_id);
