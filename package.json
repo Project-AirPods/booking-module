@@ -13,13 +13,17 @@
     "test": "jest --forceExit",
     "build": "webpack",
     "create-mock-data": "node sample-data/generator.js",
-    "docker": "npm run create-mock-data && npm run start-server"
+    "docker": "npm run create-mock-data && npm run start-server",
+    "mongo-load-listings": "mongoimport --db bookings --collection listings --type csv --headerline --file sample-data/listings.csv",
+    "mongo-load-reservations": "mongoimport --db bookings --collection reservations --type csv --headerline --file sample-data/reservations.csv",
+    "mongo-load-prices": "mongoimport --db bookings --collection prices --type csv --headerline --file sample-data/listing_daily_prices.csv"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "fast-csv": "^2.4.1",
+    "mongodb": "^3.0.10",
     "mysql": "^2.15.0",
     "npm": "^6.1.0",
     "pg": "^7.4.3",
