@@ -18,7 +18,7 @@ app.get('/listings/:listingId/booking/core', (req, res) => {
   });
 });
 
-// structure: http://localhost:3001/booking/availability/listingid/3?start_date=2018-07-01&end_date=2018-09-28
+// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2018-06-23&end_date=2018-06-24
 app.get('/listings/:listingId/booking/availability', (req, res) => {
   db.getReservationData(req.params.listingId, req.query.start_date, req.query.end_date, (err, results) => {
     if (err) {
@@ -31,13 +31,52 @@ app.get('/listings/:listingId/booking/availability', (req, res) => {
 });
 
 // structure: http://localhost:3001/booking/pricing/listingid/3?start_date=2018-07-01&end_date=2018-09-28
-app.get('listings/:listingId/booking/pricing/', (req, res) => {
+app.get('/listings/:listingId/booking/pricing/', (req, res) => {
   db.getPricingData(req.params.listingId, req.query.start_date, req.query.end_date, (err, results) => {
     if (err) {
       res.send(err);
     } else {
       res.header('Access-Control-Allow-Origin', '*');
       res.status(200).send(results);
+    }
+  });
+});
+
+// CREATE RESERVATION
+// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2018-06-23&end_date=2018-06-24
+app.post('/listings/:listingId/booking/availability', (req, res) => {
+  db.postReservationData(req.params.listingId, req.query.start_date, req.query.end_date, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.status(200).end();
+    }
+  });
+});
+
+// DELETE RESERVATION
+// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2018-06-23&end_date=2018-06-24
+app.delete('/listings/:listingId/booking/availability', (req, res) => {
+  db.deleteReservationData(req.params.listingId, req.query.start_date, req.query.end_date, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.status(200).end();
+    }
+  });
+});
+
+// PUT RESERVATION
+// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2018-07-01&end_date=2018-09-28&new_start_date=2018-07-02&new_end_date=2018-09-29
+app.put('/listings/:listingId/booking/availability', (req, res) => {
+  db.putReservationData(req.params.listingId, req.query.start_date, req.query.end_date, req.query.new_start_date, req.query.new_end_date, (err, results) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.status(200).end();
     }
   });
 });
