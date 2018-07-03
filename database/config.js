@@ -8,9 +8,9 @@
 //};
 
 module.exports = {
-  user: 'jchan',
-  host: 'localhost',
+  user: 'student',
+  host: 'ec2-13-57-220-53.us-west-1.compute.amazonaws.com',
   database: 'project_nomad_booking',
-  password: '',
+  password: 'student',
   port: 5432,
 };

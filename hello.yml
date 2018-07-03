@@ -1,0 +1,16 @@
+config:
+  target: 'http://127.0.0.1:3001'
+  http:
+    pool: 1
+  phases:
+    - duration: 60
+      arrivalRate: 800
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+scenarios:
+  - flow:
+     - get:
+        url: "/listings/{{$randomNumber(1, 10000000)}}/booking/core"
+     - get:
+         url: "/listings/{{randomNumber(1, 10000000)}}/booking/availability/?start_date=2016-08-02&end_date=2019-08-29"

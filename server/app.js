@@ -18,7 +18,7 @@ app.get('/listings/:listingId/booking/core', (req, res) => {
   });
 });
 
-// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2018-06-23&end_date=2018-06-24
+// structure: 127.0.0.1:3001/listings/88/booking/availability/?start_date=2016-08-02&end_date=2019-08-29
 app.get('/listings/:listingId/booking/availability', (req, res) => {
   db.getReservationData(req.params.listingId, req.query.start_date, req.query.end_date, (err, results) => {
     if (err) {

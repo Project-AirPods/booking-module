@@ -1,8 +1,9 @@
 const config = require('./config.js');
-const { Pool, Client } = require('pg');
+// const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 
-const client = new Client(config);
-client.connect();
+const pool = new Pool(config);
+pool.connect();
 
 module.exports.getCoreData = function getBaseDataForListing(listingId, callback) {
   const query = `SELECT l.*, ROUND(AVG(p.cost_per_night), 0) as avg_cost_per_night
@@ -11,7 +12,7 @@ module.exports.getCoreData = function getBaseDataForListing(listingId, callback)
     WHERE l.id = ${listingId}
     GROUP BY 1,2,3,4,5,6,7`;
 
-  client.query(query, (err, results) => {
+  pool.query(query, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -33,7 +34,7 @@ module.exports.getReservationData = function getReservationDataForDateRange(list
     AND (start_date BETWEEN '${startDate}' AND '${endDate}'
     OR end_date BETWEEN '${startDate}' AND '${endDate}');`;
 
-  client.query(query, (err, results) => {
+  pool.query(query, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -48,7 +49,7 @@ const getMaxPrice = function getMaxPrice(listingId, callback) {
     WHERE listing_id = ${listingId}
     ORDER BY start_date DESC LIMIT 1;`;
 
-  client.query(maxQuery, (err, results) => {
+  pool.query(maxQuery, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -66,7 +67,7 @@ module.exports.getPricingData = function getPricingDataForDateRange(listingId, s
     WHERE listing_id = ${listingId}
     AND start_date < '${endDate}';`;
 
-  client.query(query, (err, results) => {
+  pool.query(query, (err, results) => {
     if (err) {
       callback(err, null);
     } else if (results.length > 0) {
@@ -84,14 +85,14 @@ module.exports.postReservationData = function postReservationDataForDateRange(li
   
   const idquery = `SELECT id FROM reservations ORDER BY id DESC LIMIT 1;`;
 
-  client.query(idquery, (err, results) => {
+  pool.query(idquery, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
       const query = `INSERT INTO reservations (id, listing_id, start_date, end_date) 
       VALUES (${results.rows[0].id + 1}, ${listingId}, (to_date('${startDate}', 'YYYY-MM-DD')), (to_date('${endDate}', 'YYYY-MM-DD')));`;  
 
-      client.query(query, (err, results) => {
+      pool.query(query, (err, results) => {
         if (err) {
           callback(err, null);
         } else {
@@ -107,7 +108,7 @@ module.exports.deleteReservationData = function deleteReservationDataForDateRang
   
   const query = `DELETE FROM reservations WHERE listing_id = ${listingId} AND start_date = '${startDate}' AND end_date = '${endDate}';`;
 
-  client.query(query, (err, results) => {
+  pool.query(query, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
@@ -124,7 +125,7 @@ module.exports.putReservationData = function putReservationDataForDateRange(list
     start_date = '${startDate}' AND 
     end_date = '${endDate}';`;
 
-  client.query(query, (err, results) => {
+  pool.query(query, (err, results) => {
     if (err) {
       callback(err, null);
     } else {
