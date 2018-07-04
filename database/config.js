@@ -9,7 +9,7 @@
 
 module.exports = {
   user: 'student',
-  host: 'ec2-13-57-220-53.us-west-1.compute.amazonaws.com',
+  host: 'ec2-54-219-184-20.us-west-1.compute.amazonaws.com',
   database: 'project_nomad_booking',
   password: 'student',
   port: 5432,

@@ -1,8 +1,20 @@
-FROM mysql:5
+# What image do you want to start building on?
+FROM node:8.9.4
 
-ENV MYSQL_ROOT_PASSWORD 1234
-ENV MYSQL_DATABASE project_nomad_booking
-ENV MYSQL_USER booking_service
-ENV MYSQL_PASSWORD password
+# Make a folder in your image where your app's source code can live
+RUN mkdir -p /src/app
 
-ADD schema.sql /docker-entrypoint-initdb.d
+# Tell your container where your app's source code will live
+WORKDIR /src/app
+
+# What source code do you what to copy, and where to put it?
+COPY . /src/app
+
+# Does your app have any dependencies that should be installed?
+RUN npm install --production
+
+# What port will the container talk to the outside world with once created?
+EXPOSE 3001
+
+# How do you start your app? ${DBIP} is reference to the env var above
+CMD npm run start-server
